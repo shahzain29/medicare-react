@@ -41,7 +41,7 @@ export default function AdminSideBar(props) {
           </div>
           <ul className="nav">
             <li className="nav-item">
-              <Link to="/">
+              <Link to="/Dashboard">
                 <i className="la la-dashboard"></i>
                 <p>Dashboard</p>
               </Link>
