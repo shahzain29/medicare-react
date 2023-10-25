@@ -23,7 +23,7 @@ export default function Inventory() {
     getTypes();
   }, []);
   return (
-    <>
+    <div>
       <AdminHeader />
       <AdminSideBar />
       <div className="main-panel">
@@ -108,6 +108,6 @@ export default function Inventory() {
         </div>
         <AdminFooter />
       </div>
-    </>
+    </div>
   );
 }

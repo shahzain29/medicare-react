@@ -23,7 +23,7 @@ export default function MedicineTypes() {
     getTypes();
   }, []);
   return (
-    <>
+    <div>
       <AdminHeader />
       <AdminSideBar />
       <div className="main-panel">
@@ -96,6 +96,6 @@ export default function MedicineTypes() {
         </div>
         <AdminFooter />
       </div>
-    </>
+    </div>
   );
 }

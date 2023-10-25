@@ -23,7 +23,7 @@ export default function MedicineCategory(props) {
     getCategories();
   }, []);
   return (
-    <>
+    <div>
       <AdminHeader />
       <AdminSideBar />
       <div className="main-panel">
@@ -96,6 +96,6 @@ export default function MedicineCategory(props) {
         </div>
         <AdminFooter />
       </div>
-    </>
+    </div>
   );
 }

@@ -5,7 +5,7 @@ import AdminFooter from "./layouts/AdminFooter";
 
 export default function Dashboard(props) {
   return (
-    <>
+    <div>
       <AdminHeader />
       <AdminSideBar />
       <div className="main-panel">
@@ -434,6 +434,6 @@ export default function Dashboard(props) {
 
         <AdminFooter />
       </div>
-    </>
+    </div>
   );
 }
