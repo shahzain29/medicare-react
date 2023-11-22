@@ -47,6 +47,12 @@ export default function AdminSideBar(props) {
               </Link>
             </li>
             <li className="nav-item">
+              <Link to="/CreateInvoice">
+                <i className="la la-paste"></i>
+                <p>Create Invoice</p>
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link to="/inventory">
                 <i className="la la-ambulance"></i>
                 <p>Inventory</p>

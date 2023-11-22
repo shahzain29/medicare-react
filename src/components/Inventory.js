@@ -9,19 +9,37 @@ import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 export default function Inventory() {
   var counter = 1;
   const [medicines, setMedicines] = useState([]);
+  const [search, setSearch] = useState('')
   const medicinesCollectionRef = collection(db, "medicine_inventory");
   const getTypes = async () => {
     const data = await getDocs(medicinesCollectionRef);
     setMedicines(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
-  const handleDeleteButton = async (id) => {
-    const medDoc = doc(medicinesCollectionRef, id);
-    await deleteDoc(medDoc);
-    getTypes();
-  };
+
+  const filterSearch = () => {
+    let result = medicines.filter((text) => {
+      const medName = text.name.toUpperCase()
+      const toSearch = search.toUpperCase()
+      return medName.indexOf(toSearch) > -1
+    })
+
+    setMedicines(result)
+  }
+  const handleDeleteButton = async (id) => { 
+    const medDoc = doc(medicinesCollectionRef, id); 
+    await deleteDoc(medDoc); 
+    getTypes(); 
+  }; 
+
+  useEffect(() => {
+    if (search == '') {
+      getTypes()
+    }
+  }, [search])
   useEffect(() => {
     getTypes();
   }, []);
+
   return (
     <div>
       <AdminHeader />
@@ -33,13 +51,24 @@ export default function Inventory() {
             <div className="row">
               <div className="col-md-12">
                 <div className="card card-tasks">
-                  <div className="card-header ">
-                    <h4 className="card-title">
-                      Inventory List{" "}
-                      <Link to="/addmedicine" className="btn btn-primary btn-sm float-right">
+                  <div className="card-header " >
+                    <div className="d-flex flex-row justify-content-between" >
+                      <h6>Inventory List{" "}</h6>
+                      <div className='d-flex flex-row'>
+                        <input
+                          name="search medicine"
+                          placeholder="medicine name..."
+                          onChange={(text) => setSearch(text.target.value)}
+                        />
+                        <button className="btn btn-primary btn-sm ml-2" onClick={() => filterSearch()}>
+                          search
+                        </button>
+                      </div>
+                      <Link to="/addmedicine" className="btn btn-primary btn-sm float-right ">
                         Add new Medicine
                       </Link>{" "}
-                    </h4>
+                    </div>
+
                   </div>
                   <div className="card-body ">
                     <div className="table-full-width px-5 py-4 table-striped">
@@ -58,7 +87,7 @@ export default function Inventory() {
                           </tr>
                         </thead>
                         <tbody>
-                          {medicines.map((medicine) => {
+                          {(medicines).map((medicine) => {
                             return (
                               <tr>
                                 <td>{counter++}</td>
@@ -67,7 +96,7 @@ export default function Inventory() {
                                 </td>
                                 <td>{medicine.category}</td>
                                 <td>{medicine.type}</td>
-                                <td>₹{medicine.price}</td>
+                                <td>${medicine.price}</td>
                                 <td>{medicine.stock}</td>
                                 <td className="td-actions">
                                   <div className="form-button-action">

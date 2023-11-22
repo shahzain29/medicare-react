@@ -14,6 +14,8 @@ import UpdateType from "./components/UpdateType";
 import Inventory from "./components/Inventory";
 import AddMedicine from "./components/AddMedicine";
 import UpdateMedicine from "./components/UpdateMedicine";
+import CreateInvoice from "./components/CreateInvoice";
+import ForgetPassword from "./components/ForgetPassword"
 
 function App() {
   return (
@@ -32,6 +34,9 @@ function App() {
         <Route exact path="/inventory" element={<Inventory />} />
         <Route exact path="/addmedicine" element={<AddMedicine />} />
         <Route exact path="/updatemedicine" element={<UpdateMedicine />} />
+        <Route exact path="/CreateInvoice" element = {<CreateInvoice/>}/>
+        <Route exact path="/ForgetPassword" element = {<ForgetPassword/>}/>
+
       </Routes>
     </BrowserRouter>
   );
