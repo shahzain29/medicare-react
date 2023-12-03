@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import AdminLogin from "./components/AdminLogin";
 import AdminRegister from "./components/AdminRegister";
@@ -34,9 +34,8 @@ function App() {
         <Route exact path="/inventory" element={<Inventory />} />
         <Route exact path="/addmedicine" element={<AddMedicine />} />
         <Route exact path="/updatemedicine" element={<UpdateMedicine />} />
-        <Route exact path="/CreateInvoice" element = {<CreateInvoice/>}/>
-        <Route exact path="/ForgetPassword" element = {<ForgetPassword/>}/>
-
+        <Route exact path="/CreateInvoice" element={<CreateInvoice />} />
+        <Route exact path="/ForgetPassword" element={<ForgetPassword />} />
       </Routes>
     </BrowserRouter>
   );

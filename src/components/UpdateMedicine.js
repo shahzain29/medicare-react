@@ -8,14 +8,20 @@ import { collection, doc, updateDoc, getDocs } from "firebase/firestore";
 
 export default function UpdateMedicine() {
   const navigate = useNavigate();
-  const [categories, setCategories] = useState([]);
   const categoriesCollectionReference = collection(db, "medicine_categories");
+  const medTypesCollectionRef = collection(db, "medicine_types");
+  const medicinesCollecitonRef = collection(db, "medicine_inventory");
+
+  const [categories, setCategories] = useState([]);
+  const [medTypes, setMedTypes] = useState([]);
+  const [medicine, setMedicine] = useState(JSON.parse(localStorage.getItem("medicine_obj")));
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  
   const getCategories = async () => {
     const data = await getDocs(categoriesCollectionReference);
     setCategories(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
-  const [medTypes, setMedTypes] = useState([]);
-  const medTypesCollectionRef = collection(db, "medicine_types");
   const getTypes = async () => {
     const data = await getDocs(medTypesCollectionRef);
     setMedTypes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -24,11 +30,7 @@ export default function UpdateMedicine() {
     getCategories();
     getTypes();
   }, []);
-  const medicinesCollecitonRef = collection(db, "medicine_inventory");
-  const [medicine, setMedicine] = useState(JSON.parse(localStorage.getItem("medicine_obj")));
 
-  const [errorMsg, setErrorMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
   const handleUpdateMedicine = async () => {
     if (
       medicine.name &&

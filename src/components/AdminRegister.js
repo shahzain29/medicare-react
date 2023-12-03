@@ -6,11 +6,11 @@ import { auth } from "../firebase";
 export default function AdminRegister() {
   const navigate = useNavigate();
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigate("/");
-      }
-    });
+    // auth.onAuthStateChanged((user) => {
+    //   if (user) {
+    //     navigate("/");
+    //   }
+    // });
   }, []);
   const [values, setValues] = useState({
     name: "",

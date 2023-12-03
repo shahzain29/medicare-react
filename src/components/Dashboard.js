@@ -1,9 +1,29 @@
-import React from "react";
+import React,{ useState, useEffect } from "react";
 import AdminHeader from "./layouts/AdminHeader";
 import AdminSideBar from "./layouts/AdminSideBar";
 import AdminFooter from "./layouts/AdminFooter";
+import { db } from "../firebase";
+import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore";
 
 export default function Dashboard(props) {
+
+  const salesReference = collection(db,'Sales')
+
+  const [salesData,setSalesData]=useState([])
+
+  const getSales = async ()  =>{
+    const data = await getDocs(salesReference)
+    setSalesData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  }
+
+  useEffect(()=>{
+    getSales()
+  },[])
+
+  useEffect(()=>{
+    console.log(salesData)
+  },[salesData])
+
   return (
     <div>
       <AdminHeader />
@@ -236,7 +256,7 @@ export default function Dashboard(props) {
               <div className="col-md-6">
                 <div className="card">
                   <div className="card-header ">
-                    <h4 className="card-title">Table</h4>
+                    <h4 className="card-title">Sales</h4>
                     <p className="card-category">Users Table</p>
                   </div>
                   <div className="card-body">
@@ -245,35 +265,27 @@ export default function Dashboard(props) {
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">First</th>
-                          <th scope="col">Last</th>
-                          <th scope="col">Handle</th>
+                          <th scope="col">Amount</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td colSpan="2">Larry the Bird</td>
-                          <td>@twitter</td>
-                        </tr>
+                        {salesData.map((e)=>{
+                          return(
+                            <tr>
+                            <td>1</td>
+                            <td>{e.name}</td>
+                            <td>{e.sale}</td>
+                          </tr>
+                          )
+                        })}
+                       
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
               <div className="col-md-6">
-                <div className="card card-tasks">
+                {/* <div className="card card-tasks">
                   <div className="card-header ">
                     <h4 className="card-title">Tasks</h4>
                     <p className="card-category">To Do List</p>
@@ -426,7 +438,7 @@ export default function Dashboard(props) {
                       <i className="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

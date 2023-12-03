@@ -9,22 +9,11 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 export default function AddMedicine() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const categoriesCollectionReference = collection(db, "medicine_categories");
-  const getCategories = async () => {
-    const data = await getDocs(categoriesCollectionReference);
-    setCategories(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  };
   const [medTypes, setMedTypes] = useState([]);
-  const medTypesCollectionRef = collection(db, "medicine_types");
-  const getTypes = async () => {
-    const data = await getDocs(medTypesCollectionRef);
-    setMedTypes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  };
-  useEffect(() => {
-    getCategories();
-    getTypes();
-  }, []);
+
+  const categoriesCollectionReference = collection(db, "medicine_categories");
   const medicinesCollectionRef = collection(db, "medicine_inventory");
+  const medTypesCollectionRef = collection(db, "medicine_types");
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [medicine, setMedicine] = useState({
@@ -35,6 +24,18 @@ export default function AddMedicine() {
     price: "",
     stock: "",
   });
+  const getCategories = async () => {
+    const data = await getDocs(categoriesCollectionReference);
+    setCategories(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+  const getTypes = async () => {
+    const data = await getDocs(medTypesCollectionRef);
+    setMedTypes(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+  useEffect(() => {
+    getCategories();
+    getTypes();
+  }, []);
   const handleAddMedicine = async () => {
     if (
       medicine.name &&
@@ -69,7 +70,7 @@ export default function AddMedicine() {
       <div className="main-panel">
         <div className="content">
           <div className="container-fluid">
-            <h4 className="page-title">Create Medicine</h4>
+            <h4 className="page-title">Add Medicine</h4>
             <div className="row">
               <div className="col-md-12">
                 <div className="card">
